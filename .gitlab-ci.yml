@@ -1,0 +1,18 @@
+default:
+  tags:
+    - DRP19, backend
+
+build:
+  stage: build
+  script:
+    - ./gradlew build
+
+test:
+  stage: test
+  script:
+    - ./gradlew test
+
+deploy:
+  stage: deploy
+  script:
+    - git push heroku master
