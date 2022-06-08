@@ -4,15 +4,28 @@ default:
 
 build:
   stage: build
+  only:
+    - master
   script:
     - ./gradlew build
 
+build-war:
+  stage: build
+  only:
+    - master
+  script:
+    - ./gradlew war
+
 test:
   stage: test
+  only:
+    - master
   script:
     - ./gradlew test
 
-deploy:
+deploy-prod:
   stage: deploy
+  only:
+    - master
   script:
     - git push heroku master
