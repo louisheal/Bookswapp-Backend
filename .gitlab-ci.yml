@@ -23,9 +23,9 @@ build-war:
   script:
     - ./gradlew war
 
-deploy-prod:
-  stage: deploy
-  only:
-    - master
-  script:
-    - ./gradlew deployHeroku
+#deploy-prod:
+#  stage: deploy
+#  only:
+#    - master
+#  script:
+#    - ./gradlew deployHeroku

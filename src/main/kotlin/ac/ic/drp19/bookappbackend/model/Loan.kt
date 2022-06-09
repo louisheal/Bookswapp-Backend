@@ -3,6 +3,7 @@ package ac.ic.drp19.bookappbackend.model
 import com.fasterxml.jackson.annotation.JsonFormat
 import java.sql.Date
 import java.time.LocalDate
+import java.util.Collections.emptyList
 import javax.persistence.Entity
 import javax.persistence.GeneratedValue
 import javax.persistence.GenerationType

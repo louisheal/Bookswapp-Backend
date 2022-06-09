@@ -4,7 +4,6 @@ plugins {
     id("org.springframework.boot") version "2.7.0"
     id("io.spring.dependency-management") version "1.0.11.RELEASE"
     id("com.heroku.sdk.heroku-gradle") version "2.0.0"
-    war
     kotlin("jvm") version "1.6.21"
     kotlin("plugin.spring") version "1.6.21"
     kotlin("plugin.jpa") version "1.6.21"
@@ -22,15 +21,13 @@ dependencies {
     compileOnly("org.projectlombok:lombok:1.18.24")
     annotationProcessor("org.projectlombok:lombok:1.18.24")
     implementation("org.springframework.boot:spring-boot-starter-data-jpa")
-    implementation("org.springframework.boot:spring-boot-starter-jersey")
-    implementation("org.springframework.boot:spring-boot-starter-mustache")
+    implementation("org.springframework.boot:spring-boot-starter-validation")
     implementation("org.springframework.boot:spring-boot-starter-web")
     implementation("com.fasterxml.jackson.module:jackson-module-kotlin")
     implementation("org.jetbrains.kotlin:kotlin-reflect")
     implementation("org.jetbrains.kotlin:kotlin-stdlib-jdk8")
     developmentOnly("org.springframework.boot:spring-boot-devtools")
     runtimeOnly("com.h2database:h2")
-    providedRuntime("org.springframework.boot:spring-boot-starter-tomcat")
 
     testCompileOnly("org.projectlombok:lombok:1.18.24")
     testAnnotationProcessor("org.projectlombok:lombok:1.18.24")
@@ -48,13 +45,13 @@ tasks.withType<Test> {
     useJUnitPlatform()
 }
 
-tasks.war {
-    archiveFileName.set("drp19-backend.war")
-}
+//tasks.withType<Jar> {
+//    manifest {
+//        attributes["Main-Class"] = "ac.ic.drp19.bookappbackend.BookappBackendApplicationKt"
+//    }
+//}
 
 heroku {
     appName = "drp19"
-    includes = listOf("build/libs/drp19-backend.war")
-    isIncludeBuildDir = false
     jdkVersion = "11"
 }
