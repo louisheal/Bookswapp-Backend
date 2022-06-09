@@ -1,0 +1,1 @@
+web: java -jar build/libs/drp19-backend.jar

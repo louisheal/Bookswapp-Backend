@@ -48,13 +48,15 @@ tasks.withType<Test> {
     useJUnitPlatform()
 }
 
+tasks.jar {
+    archiveFileName.set("drp19-backend.jar")
+}
+
 tasks.war {
     archiveFileName.set("drp19-backend.war")
 }
 
 heroku {
     appName = "drp19"
-    includes = listOf("build/libs/drp19-backend.war")
-    isIncludeBuildDir = false
     jdkVersion = "11"
 }
