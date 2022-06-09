@@ -46,3 +46,7 @@ tasks.withType<KotlinCompile> {
 tasks.withType<Test> {
     useJUnitPlatform()
 }
+
+tasks.jar {
+    archiveFileName.set("drp19-backend.jar")
+}
