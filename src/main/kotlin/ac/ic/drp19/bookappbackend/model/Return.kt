@@ -1,38 +1,29 @@
-package ac.ic.drp19.bookappbackend.models
+package ac.ic.drp19.bookappbackend.model
 
+import com.fasterxml.jackson.annotation.JsonFormat
 import java.sql.Date
+import java.time.LocalDate
 import javax.persistence.Entity
 import javax.persistence.GeneratedValue
 import javax.persistence.GenerationType
 import javax.persistence.Id
 import javax.persistence.ManyToOne
-import javax.persistence.OneToMany
 import javax.validation.constraints.Min
 import javax.validation.constraints.NotNull
 
 @Entity
-class Loan(
+class Return(
     @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
     val id: Long,
 
     @ManyToOne
-    val fromUser: User,
-
-    @ManyToOne
-    val toUser: User,
-
-    @ManyToOne
-    val book: Book,
+    val loan: Loan,
 
     @NotNull
     @Min(1)
     val copies: Int,
 
     @NotNull
-    val date: Date,
-
-    val returnDate: Date,
-
-    @OneToMany(mappedBy = "loan")
-    val returns: List<Return>
+    @JsonFormat(pattern = "yyyy-MM-dd")
+    var date: Date = Date.valueOf(LocalDate.now())
 )

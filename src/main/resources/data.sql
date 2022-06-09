@@ -4,7 +4,7 @@ insert into Book (isbn, title, published) values ('1', 'Book1', cast('2000-1-1' 
 insert into Book (isbn, title, published) values ('2', 'Book2', cast('2000-1-2' as DATE));
 insert into Book (isbn, title, published) values ('3', 'Book3', cast('2000-1-3' as DATE));
 
-insert into Users (username, passwdHash, name) values ('emilfilip02', 'abx083247u', 'Emil Filip');
-insert into Users (username, passwdHash, name) values ('Anand5329', '1245328967', 'Anand Doshi');
-insert into Users (username, passwdHash, name) values ('LJRex', 'hashashash', 'Louis Heal');
+insert into Users (username, passwdHash, name) values ('ef420_icl', '3451', 'Emil Filip');
+insert into Users (username, passwdHash, name) values ('Anand5329', '0368', 'Anand Doshi');
+insert into Users (username, passwdHash, name) values ('LJRex', '4796', 'Louis Heal');
 insert into Users (username, passwdHash, name) values ('Anjey', '6699', 'Andrii Verveha');

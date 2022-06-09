@@ -1,4 +1,4 @@
-package ac.ic.drp19.bookappbackend.models
+package ac.ic.drp19.bookappbackend.model
 
 import javax.persistence.Entity
 import javax.persistence.GeneratedValue
@@ -11,7 +11,7 @@ import javax.validation.constraints.NotNull
 @Entity
 class Ownership(
     @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
-    val id: Int? = null,
+    val id: Long,
 
     @ManyToOne
     val owner: User,
