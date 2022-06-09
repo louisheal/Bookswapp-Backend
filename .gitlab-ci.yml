@@ -9,13 +9,6 @@ build:
   script:
     - ./gradlew build
 
-build-war:
-  stage: build
-  only:
-    - master
-  script:
-    - ./gradlew war
-
 test:
   stage: test
   only:
@@ -23,9 +16,16 @@ test:
   script:
     - ./gradlew test
 
+build-war:
+  stage: deploy
+  only:
+    - master
+  script:
+    - ./gradlew war
+
 deploy-prod:
   stage: deploy
   only:
     - master
   script:
-    - git push heroku master
+    - ./gradlew deployHeroku
