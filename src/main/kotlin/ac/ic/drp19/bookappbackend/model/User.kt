@@ -1,5 +1,8 @@
 package ac.ic.drp19.bookappbackend.model
 
+import com.fasterxml.jackson.annotation.JsonFormat
+import java.sql.Date
+import java.time.LocalDate
 import javax.persistence.Entity
 import javax.persistence.GeneratedValue
 import javax.persistence.GenerationType
@@ -12,27 +15,31 @@ import javax.validation.constraints.NotNull
 @Table(name = "Users")
 class User(
     @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
-    val id: Long,
+    var id: Long,
 
     @NotNull
-    val username: String,
+    var username: String,
 
     @NotNull
-    val passwdHash: String,
+    var passwdHash: String,
 
     @NotNull
-    val name: String,
+    var name: String,
 
-    val email: String,
+    var email: String,
 
-    val phone: String,
+    var phone: String,
+
+    @NotNull
+    @JsonFormat(pattern = "yyyy-MM-dd")
+    var joinDate: Date = Date.valueOf(LocalDate.now()),
 
     @OneToMany(mappedBy = "owner")
-    val owns: List<Ownership> = emptyList(),
+    var owns: List<Ownership> = emptyList(),
 
     @OneToMany(mappedBy = "fromUser")
-    val loans: List<Loan> = emptyList(),
+    var loans: List<Loan> = emptyList(),
 
     @OneToMany(mappedBy = "toUser")
-    val borrows: List<Loan> = emptyList()
+    var borrows: List<Loan> = emptyList()
 )

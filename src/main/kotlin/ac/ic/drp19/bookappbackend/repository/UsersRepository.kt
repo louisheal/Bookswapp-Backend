@@ -5,7 +5,7 @@ import org.springframework.data.jpa.repository.Query
 import org.springframework.data.repository.CrudRepository
 import org.springframework.data.repository.query.Param
 
-interface UserRepository : CrudRepository<User, String> {
+interface UsersRepository : CrudRepository<User, String> {
 
     @Query("select u from User u")
     fun findUsers(): List<User>

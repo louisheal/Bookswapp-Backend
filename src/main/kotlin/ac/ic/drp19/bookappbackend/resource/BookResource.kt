@@ -9,6 +9,7 @@ import org.springframework.web.bind.annotation.RestController
 
 @RestController
 class BookResource(val service: BookService) {
+
     @GetMapping("/books")
     fun booksIndex(): List<Book> = service.findBooks()
 
