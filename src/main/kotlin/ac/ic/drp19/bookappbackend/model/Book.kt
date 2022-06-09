@@ -1,5 +1,6 @@
 package ac.ic.drp19.bookappbackend.model
 
+import com.fasterxml.jackson.annotation.JsonBackReference
 import com.fasterxml.jackson.annotation.JsonFormat
 import com.sun.istack.NotNull
 import java.sql.Date
@@ -24,5 +25,6 @@ class Book(
     var published: Date,
 
     @OneToMany(mappedBy = "book")
+    @JsonBackReference
     var owners: List<Ownership> = emptyList()
 )

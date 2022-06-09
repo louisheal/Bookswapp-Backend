@@ -1,5 +1,6 @@
 package ac.ic.drp19.bookappbackend.model
 
+import com.fasterxml.jackson.annotation.JsonBackReference
 import com.fasterxml.jackson.annotation.JsonFormat
 import java.sql.Date
 import java.time.LocalDate
@@ -35,11 +36,14 @@ class User(
     var joinDate: Date = Date.valueOf(LocalDate.now()),
 
     @OneToMany(mappedBy = "owner")
+    @JsonBackReference
     var owns: List<Ownership> = emptyList(),
 
     @OneToMany(mappedBy = "fromUser")
+    @JsonBackReference
     var loans: List<Loan> = emptyList(),
 
     @OneToMany(mappedBy = "toUser")
+    @JsonBackReference
     var borrows: List<Loan> = emptyList()
 )

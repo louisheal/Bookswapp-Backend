@@ -23,9 +23,9 @@ test:
   script:
     - ./gradlew test
 
-deploy-prod:
-  stage: deploy
-  only:
-    - master
-  script:
-    - git push heroku master
+#deploy-prod:
+#  stage: deploy
+#  only:
+#    - master
+#  script:
+#    - git push heroku master
