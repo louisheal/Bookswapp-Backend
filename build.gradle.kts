@@ -4,7 +4,6 @@ plugins {
     id("org.springframework.boot") version "2.7.0"
     id("io.spring.dependency-management") version "1.0.11.RELEASE"
     id("com.heroku.sdk.heroku-gradle") version "2.0.0"
-    war
     kotlin("jvm") version "1.6.21"
     kotlin("plugin.spring") version "1.6.21"
     kotlin("plugin.jpa") version "1.6.21"
@@ -29,7 +28,6 @@ dependencies {
     implementation("org.jetbrains.kotlin:kotlin-stdlib-jdk8")
     developmentOnly("org.springframework.boot:spring-boot-devtools")
     runtimeOnly("com.h2database:h2")
-    providedRuntime("org.springframework.boot:spring-boot-starter-tomcat")
 
     testCompileOnly("org.projectlombok:lombok:1.18.24")
     testAnnotationProcessor("org.projectlombok:lombok:1.18.24")
@@ -45,14 +43,6 @@ tasks.withType<KotlinCompile> {
 
 tasks.withType<Test> {
     useJUnitPlatform()
-}
-
-tasks.jar {
-    archiveFileName.set("drp19-backend.jar")
-}
-
-tasks.war {
-    archiveFileName.set("drp19-backend.war")
 }
 
 heroku {

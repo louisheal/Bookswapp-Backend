@@ -1,1 +1,1 @@
-web: java $JAVA_OPTS -jar webapp-runner.jar ${WEBAPP_RUNNER_OPTS} --port $PORT ./build/libs/drp19-backend.war
+web: java -Dspring.profiles.active=prod -Dserver.port=$PORT -jar build/libs/bookapp-backend-0.0.1-SNAPSHOT
