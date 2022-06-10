@@ -20,7 +20,6 @@ repositories {
 
 dependencies {
     compileOnly("org.projectlombok:lombok:1.18.24")
-    compileOnly("com.github.jsimone:webapp-runner:8.5.11.3")
     annotationProcessor("org.projectlombok:lombok:1.18.24")
     implementation("org.springframework.boot:spring-boot-starter-data-jpa")
     implementation("org.springframework.boot:spring-boot-starter-validation")
@@ -48,17 +47,15 @@ tasks.withType<Test> {
     useJUnitPlatform()
 }
 
+tasks.jar {
+    archiveFileName.set("drp19-backend.jar")
+}
+
 tasks.war {
-    mustRunAfter(tasks.clean)
     archiveFileName.set("drp19-backend.war")
 }
 
-tasks.register("stage") {
-    dependsOn(tasks.clean, tasks.war, tasks.getByName("copyToLib"))
-}
-
-tasks.register<Copy>("copyToLib") {
-    from(configurations.compileOnly)
-    into("$buildDir/server")
-    include("webapp-runner*")
+heroku {
+    appName = "drp19"
+    jdkVersion = "11"
 }
