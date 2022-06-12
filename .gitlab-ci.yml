@@ -1,0 +1,32 @@
+default:
+  tags:
+    - DRP19, backend
+
+build:
+  stage: build
+  script:
+    - ./mvnw compile
+  only:
+    - master
+
+test:
+  stage: test
+  script:
+    - ./mvnw test
+  only:
+    - master
+
+deploy-build:
+  stage: deploy
+  script:
+    - ./mvnw clean repackage
+  only:
+    - master
+
+deploy-prod:
+  stage: deploy
+  image: ruby:latest
+  script:
+    - dpl --provider=heroku --app=$HEROKU_APP_PRODUCTION --api_key=$HEROKU_API_KEY
+  only:
+    - master
