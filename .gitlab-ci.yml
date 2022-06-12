@@ -16,17 +16,10 @@ test:
   only:
     - master
 
-deploy-build:
-  stage: deploy
-  script:
-    - ./mvnw clean install
-  only:
-    - master
-
 deploy-prod:
   stage: deploy
   image: ruby:latest
   script:
-    - dpl --provider=heroku --app=$HEROKU_APP_PRODUCTION --api-key=$HEROKU_API_KEY
+    - dpl --provider=heroku --app=$HEROKU_APP_PRODUCTION --api_key=$HEROKU_API_KEY
   only:
     - master
