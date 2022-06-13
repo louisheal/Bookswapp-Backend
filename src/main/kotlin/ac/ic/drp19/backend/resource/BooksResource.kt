@@ -8,32 +8,30 @@ import org.springframework.web.bind.annotation.GetMapping
 import org.springframework.web.bind.annotation.PathVariable
 import org.springframework.web.bind.annotation.PostMapping
 import org.springframework.web.bind.annotation.RequestBody
-import org.springframework.web.bind.annotation.RequestMapping
 import org.springframework.web.bind.annotation.RestController
 
 @RestController
-@RequestMapping("/books")
 class BooksResource(
     val bookService: BookService,
     val ownershipService: OwnershipService
 ) {
 
-    @GetMapping("/")
+    @GetMapping("/books")
     fun books(): List<Book> = bookService.findBooks()
 
-    @GetMapping("/{id}")
+    @GetMapping("/books/{id}")
     fun bookId(
         @PathVariable(name = "id") bookId: Long
     ): Book? =
         bookService.findBookById(bookId)
 
-    @GetMapping("/{id}/owners")
+    @GetMapping("/books/{id}/owners")
     fun bookOwners(
         @PathVariable(name = "id") bookId: Long
     ): List<User> =
         ownershipService.findOwnersOfBook(bookId)
 
-    @PostMapping("/")
+    @PostMapping("/books")
     fun postBook(@RequestBody book: Book) {
         bookService.postBook(book)
     }

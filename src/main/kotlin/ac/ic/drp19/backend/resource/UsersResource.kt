@@ -13,39 +13,38 @@ import org.springframework.web.bind.annotation.RequestMapping
 import org.springframework.web.bind.annotation.RestController
 
 @RestController
-@RequestMapping("/users")
 class UsersResource(
     val userService: UsersService,
     val ownerService: OwnershipService
 ) {
 
-    @GetMapping("/")
+    @GetMapping("/users")
     fun users(): List<User> = userService.findUsers()
 
-    @GetMapping("/{user_id}")
+    @GetMapping("/users/{user_id}")
     fun user(
         @PathVariable("user_id") userId: Long
     ): User? =
         userService.findUserById(userId)
 
-    @GetMapping("/{user_id}/owns")
+    @GetMapping("/users/{user_id}/owns")
     fun userOwns(
         @PathVariable("user_id") userId: Long
     ): List<Ownership>? =
         userService.findUserOwns(userId)
 
-    @GetMapping("/{user_id}/books")
+    @GetMapping("/users/{user_id}/books")
     fun userBooks(
         @PathVariable("user_id") userId: Long
     ): List<Book>? =
         ownerService.findUserBooks(userId)
 
-    @PostMapping("/")
+    @PostMapping("/users")
     fun postUser(@RequestBody user: User) {
         userService.postUser(user)
     }
 
-    @PostMapping("/{user_id}/owns")
+    @PostMapping("/users/{user_id}/owns")
     fun postOwnership(
         @PathVariable("user_id") userId: Long,
         @RequestBody owns: OwnershipPost
