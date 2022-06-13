@@ -6,20 +6,22 @@ build:
   stage: build
   script:
     - ./mvnw compile
-  only:
-    - master
 
 test:
   stage: test
   script:
     - ./mvnw test
-  only:
-    - master
 
-deploy-prod:
+deploy-staging:
   stage: deploy
   image: ruby:latest
   script:
-    - dpl --provider=heroku --app=$HEROKU_APP_PRODUCTION --api_key=$HEROKU_API_KEY
+    - dpl --provider=heroku --app=$HEROKU_APP_STAGING --api_key=$HEROKU_TOKEN
+
+deploy-production:
+  stage: deploy
+  image: ruby:latest
+  script:
+    - dpl --provider=heroku --app=$HEROKU_APP_PRODUCTION --api_key=$HEROKU_TOKEN
   only:
     - master
