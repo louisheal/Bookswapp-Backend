@@ -1,7 +1,9 @@
 package ac.ic.drp19.backend.resource
 
+import ac.ic.drp19.backend.model.Book
 import ac.ic.drp19.backend.model.Ownership
 import ac.ic.drp19.backend.model.User
+import ac.ic.drp19.backend.service.OwnershipService
 import ac.ic.drp19.backend.service.UsersService
 import org.springframework.web.bind.annotation.GetMapping
 import org.springframework.web.bind.annotation.PathVariable
@@ -11,26 +13,33 @@ import org.springframework.web.bind.annotation.RestController
 
 @RestController
 class UsersResource(
-    val service: UsersService
+    val userService: UsersService,
+    val ownerService: OwnershipService
 ) {
 
     @GetMapping("/users")
-    fun users(): List<User> = service.findUsers()
+    fun users(): List<User> = userService.findUsers()
 
     @GetMapping("/users/{user_id}")
     fun user(
         @PathVariable("user_id") userId: Long
     ): User? =
-        service.findUserById(userId)
+        userService.findUserById(userId)
 
     @GetMapping("/users/{user_id}/owns")
     fun userOwns(
         @PathVariable("user_id") userId: Long
     ): List<Ownership>? =
-        user(userId)?.owns
+        userService.findUserOwns(userId)
+
+    @GetMapping("/users/{user_id}/books")
+    fun userBooks(
+        @PathVariable("user_id") userId: Long
+    ): List<Book>? =
+        ownerService.findUserBooks(userId)
 
     @PostMapping("/users")
     fun postUser(@RequestBody user: User) {
-        service.postUser(user)
+        userService.postUser(user)
     }
 }
