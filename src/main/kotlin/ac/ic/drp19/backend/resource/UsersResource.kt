@@ -9,37 +9,58 @@ import org.springframework.web.bind.annotation.GetMapping
 import org.springframework.web.bind.annotation.PathVariable
 import org.springframework.web.bind.annotation.PostMapping
 import org.springframework.web.bind.annotation.RequestBody
+import org.springframework.web.bind.annotation.RequestMapping
 import org.springframework.web.bind.annotation.RestController
 
 @RestController
+@RequestMapping("/users")
 class UsersResource(
     val userService: UsersService,
     val ownerService: OwnershipService
 ) {
 
-    @GetMapping("/users")
+    @GetMapping("/")
     fun users(): List<User> = userService.findUsers()
 
-    @GetMapping("/users/{user_id}")
+    @GetMapping("/{user_id}")
     fun user(
         @PathVariable("user_id") userId: Long
     ): User? =
         userService.findUserById(userId)
 
-    @GetMapping("/users/{user_id}/owns")
+    @GetMapping("/{user_id}/owns")
     fun userOwns(
         @PathVariable("user_id") userId: Long
     ): List<Ownership>? =
         userService.findUserOwns(userId)
 
-    @GetMapping("/users/{user_id}/books")
+    @GetMapping("/{user_id}/books")
     fun userBooks(
         @PathVariable("user_id") userId: Long
     ): List<Book>? =
         ownerService.findUserBooks(userId)
 
-    @PostMapping("/users")
+    @PostMapping("/")
     fun postUser(@RequestBody user: User) {
         userService.postUser(user)
     }
+
+    @PostMapping("/{user_id}/owns")
+    fun postOwnership(
+        @PathVariable("user_id") userId: Long,
+        @RequestBody owns: OwnershipPost
+    ) {
+        ownerService.postOwnership(
+            userId,
+            owns.book_id,
+            owns.total_copies,
+            owns.current_copies
+        )
+    }
 }
+
+class OwnershipPost(
+    val book_id: Long,
+    val total_copies: Int,
+    val current_copies: Int
+)

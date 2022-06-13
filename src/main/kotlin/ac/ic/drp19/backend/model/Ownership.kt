@@ -12,7 +12,7 @@ import javax.validation.constraints.NotNull
 @Entity
 class Ownership(
     @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
-    var id: Long,
+    var id: Long = 0,
 
     @ManyToOne
     @JoinColumn(name = "owner_id")
