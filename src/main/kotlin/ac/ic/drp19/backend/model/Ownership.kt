@@ -1,5 +1,6 @@
 package ac.ic.drp19.backend.model
 
+import ac.ic.drp19.backend.util.ExposeId
 import javax.persistence.Entity
 import javax.persistence.GeneratedValue
 import javax.persistence.GenerationType
@@ -10,6 +11,7 @@ import javax.validation.constraints.Min
 import javax.validation.constraints.NotNull
 
 @Entity
+@ExposeId
 class Ownership(
     @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
     var id: Long = 0,

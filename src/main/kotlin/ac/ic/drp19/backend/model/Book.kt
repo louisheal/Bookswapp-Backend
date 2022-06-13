@@ -1,5 +1,6 @@
 package ac.ic.drp19.backend.model
 
+import ac.ic.drp19.backend.util.ExposeId
 import com.fasterxml.jackson.annotation.JsonFormat
 import com.sun.istack.NotNull
 import java.sql.Date
@@ -9,9 +10,10 @@ import javax.persistence.GenerationType
 import javax.persistence.Id
 
 @Entity
+@ExposeId
 class Book(
     @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
-    var id: Long,
+    var id: Long = 0,
 
     @NotNull
     var isbn: String,

@@ -1,5 +1,6 @@
 package ac.ic.drp19.backend.model
 
+import ac.ic.drp19.backend.util.ExposeId
 import com.fasterxml.jackson.annotation.JsonFormat
 import java.sql.Date
 import java.time.LocalDate
@@ -12,9 +13,10 @@ import javax.validation.constraints.Min
 import javax.validation.constraints.NotNull
 
 @Entity
+@ExposeId
 class Return(
     @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
-    val id: Long,
+    val id: Long = 0,
 
     @ManyToOne
     val loan: Loan,

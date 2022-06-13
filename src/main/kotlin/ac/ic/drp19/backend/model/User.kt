@@ -1,5 +1,6 @@
 package ac.ic.drp19.backend.model
 
+import ac.ic.drp19.backend.util.ExposeId
 import com.fasterxml.jackson.annotation.JsonBackReference
 import com.fasterxml.jackson.annotation.JsonFormat
 import java.sql.Date
@@ -13,10 +14,11 @@ import javax.persistence.Table
 import javax.validation.constraints.NotNull
 
 @Entity
+@ExposeId
 @Table(name = "Users")
 class User(
     @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
-    var id: Long,
+    var id: Long = 0,
 
     @NotNull
     var username: String,
