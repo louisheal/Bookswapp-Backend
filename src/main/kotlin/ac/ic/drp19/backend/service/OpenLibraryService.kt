@@ -35,5 +35,5 @@ final class OpenLibraryService {
 
 class OpenLibraryBook(
     val title: String,
-    @JsonProperty("publish_date") val publishDate: String
+    @JsonProperty("publish_date") val publishDate: String = ""
 )
