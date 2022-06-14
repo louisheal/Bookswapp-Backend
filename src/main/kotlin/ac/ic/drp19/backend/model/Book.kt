@@ -1,9 +1,7 @@
 package ac.ic.drp19.backend.model
 
 import ac.ic.drp19.backend.util.ExposeId
-import com.fasterxml.jackson.annotation.JsonFormat
 import com.sun.istack.NotNull
-import java.sql.Date
 import javax.persistence.Entity
 import javax.persistence.GeneratedValue
 import javax.persistence.GenerationType
@@ -21,6 +19,5 @@ class Book(
     @NotNull
     var title: String,
 
-    @JsonFormat(pattern = "yyyy-MM-dd")
-    var published: Date
+    var published: String
 )

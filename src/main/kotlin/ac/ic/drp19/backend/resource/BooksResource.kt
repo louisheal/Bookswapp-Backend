@@ -23,7 +23,7 @@ class BooksResource(
         bookService.findBookById(bookId)
 
     @PostMapping("/books")
-    fun postBook(@RequestBody book: Book) {
-        bookService.postBook(book)
+    fun postBook(@RequestBody isbn: String) {
+        bookService.postBook(isbn)
     }
 }
