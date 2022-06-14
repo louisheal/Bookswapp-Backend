@@ -38,13 +38,5 @@ class User(
 
     @OneToMany(mappedBy = "owner")
     @JsonBackReference(value = "user-owns")
-    var owns: List<Ownership> = emptyList(),
-
-    @OneToMany(mappedBy = "fromUser")
-    @JsonBackReference(value = "user-loans")
-    var loans: List<Loan> = emptyList(),
-
-    @OneToMany(mappedBy = "toUser")
-    @JsonBackReference(value = "user-borrows")
-    var borrows: List<Loan> = emptyList()
+    var owns: List<Ownership> = emptyList()
 )
