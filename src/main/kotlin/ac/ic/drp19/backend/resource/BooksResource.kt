@@ -2,6 +2,7 @@ package ac.ic.drp19.backend.resource
 
 import ac.ic.drp19.backend.model.Book
 import ac.ic.drp19.backend.service.BookService
+import ac.ic.drp19.backend.util.removeQuotes
 import org.springframework.web.bind.annotation.GetMapping
 import org.springframework.web.bind.annotation.PathVariable
 import org.springframework.web.bind.annotation.PostMapping
@@ -24,6 +25,6 @@ class BooksResource(
 
     @PostMapping("/books")
     fun postBook(@RequestBody isbn: String) {
-        bookService.postBook(isbn)
+        bookService.postBook(removeQuotes(isbn))
     }
 }
