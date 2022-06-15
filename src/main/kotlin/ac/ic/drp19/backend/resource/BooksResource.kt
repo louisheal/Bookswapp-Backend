@@ -32,7 +32,7 @@ class BooksResource(
             bookService.postBookByIsbn(removeQuotes(isbn))
             ResponseEntity(null, HttpStatus.OK)
         } catch (e: ResponseStatusException) {
-            ResponseEntity(null, HttpStatus.NOT_FOUND)
+            ResponseEntity(e.reason, e.status)
         }
     }
 }

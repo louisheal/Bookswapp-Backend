@@ -11,7 +11,6 @@ import org.springframework.web.reactive.function.client.WebClientResponseExcepti
 import org.springframework.web.server.ResponseStatusException
 import reactor.core.publisher.Mono
 import reactor.netty.http.client.HttpClient
-import kotlin.jvm.Throws
 
 @Service
 final class OpenLibraryService {
@@ -26,15 +25,18 @@ final class OpenLibraryService {
         )
         .build()
 
-    fun retrieveBookObject(isbn: String): Mono<OpenLibraryBook?> {
+    fun retrieveBookObject(isbn: String): OpenLibraryBook {
         return webClient
             .get()
             .uri("/isbn/{isbn}.json", isbn)
             .accept(APPLICATION_JSON)
             .header(CONTENT_TYPE, APPLICATION_JSON_VALUE)
             .retrieve()
+            .onStatus(HttpStatus::isError) {
+                Mono.error(ResponseStatusException(it.statusCode(), "ISBN not found"))
+            }
             .bodyToMono(OpenLibraryBook::class.java)
-            .onErrorResume { Mono.empty() }
+            .block()!!
     }
 }
 
