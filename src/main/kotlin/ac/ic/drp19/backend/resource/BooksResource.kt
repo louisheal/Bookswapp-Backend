@@ -38,8 +38,8 @@ class BooksResource(
     @PostMapping("/books")
     fun postBook(@RequestBody isbn: String): ResponseEntity<Any?> {
         return try {
-            bookService.postBookByIsbn(removeQuotes(isbn))
-            ResponseEntity(null, HttpStatus.OK)
+            val book = bookService.postBookByIsbn(removeQuotes(isbn))
+            ResponseEntity(book, HttpStatus.OK)
         } catch (e: ResponseStatusException) {
             ResponseEntity(e.reason, e.status)
         }

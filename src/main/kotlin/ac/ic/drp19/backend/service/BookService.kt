@@ -22,9 +22,10 @@ class BookService(
     fun findBookByIsbn(isbn: String): Book? = db.findByIsbn(isbn)
 
     @Throws(ResponseStatusException::class)
-    fun postBookByIsbn(isbn: String) {
-        if (findBookByIsbn(isbn) == null) {
-            val book = olService
+    fun postBookByIsbn(isbn: String): Book {
+        var book = findBookByIsbn(isbn)
+        if (book == null) {
+            book = olService
                 .retrieveBookObject(isbn)
                 .let {
                     Book(
@@ -35,5 +36,6 @@ class BookService(
                 }
             db.save(book)
         }
+        return book
     }
 }
