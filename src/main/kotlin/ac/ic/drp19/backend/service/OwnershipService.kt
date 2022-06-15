@@ -19,23 +19,28 @@ class OwnershipService(
 
     fun findUserBooks(userId: Long): List<Book> = ownerDb.findUserBooks(userId)
 
+    fun findOwnership(userId: Long, bookId: Long): Ownership? =
+        ownerDb.findOwnership(userId, bookId)
+
     fun postOwnership(
         userId: Long,
         bookId: Long,
         totalCopies: Int,
         currentCopies: Int
     ) {
-        val userOptional = userDb.findById(userId)
-        val bookOptional = bookDb.findById(bookId)
-        userOptional.ifPresent { user ->
-            bookOptional.ifPresent { book ->
-                val ownership = Ownership(
-                    owner = user,
-                    book = book,
-                    totalCopies = totalCopies,
-                    currentCopies = currentCopies
-                )
-                ownerDb.save(ownership)
+        if (findOwnership(userId, bookId) == null) {
+            val userOptional = userDb.findById(userId)
+            val bookOptional = bookDb.findById(bookId)
+            userOptional.ifPresent { user ->
+                bookOptional.ifPresent { book ->
+                    val ownership = Ownership(
+                        owner = user,
+                        book = book,
+                        totalCopies = totalCopies,
+                        currentCopies = currentCopies
+                    )
+                    ownerDb.save(ownership)
+                }
             }
         }
     }

@@ -14,4 +14,7 @@ interface OwnershipRepository : CrudRepository<Ownership, Long> {
 
     @Query("select o.book from Ownership o where o.owner.id = :user_id")
     fun findUserBooks(@Param("user_id") userId: Long): List<Book>
+
+    @Query("select o from Ownership o where o.owner.id = :user_id and o.book.id = :book_id")
+    fun findOwnership(@Param("user_id") userId: Long, @Param("book_id") bookId: Long): Ownership?
 }
