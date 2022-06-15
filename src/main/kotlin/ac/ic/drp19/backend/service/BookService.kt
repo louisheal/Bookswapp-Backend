@@ -3,7 +3,11 @@ package ac.ic.drp19.backend.service
 import ac.ic.drp19.backend.model.Book
 import ac.ic.drp19.backend.repository.BookRepository
 import org.springframework.data.repository.findByIdOrNull
+import org.springframework.http.HttpStatus
 import org.springframework.stereotype.Service
+import org.springframework.web.server.ResponseStatusException
+import reactor.core.publisher.Mono
+import kotlin.jvm.Throws
 
 @Service
 class BookService(
@@ -17,20 +21,19 @@ class BookService(
 
     fun findBookByIsbn(isbn: String): Book? = db.findByIsbn(isbn)
 
-    fun postBook(isbn: String) {
+    @Throws(ResponseStatusException::class)
+    fun postBookByIsbn(isbn: String) {
         if (findBookByIsbn(isbn) == null) {
-            olService
+            val book = olService
                 .retrieveBookObject(isbn)
-                .map {
+                .let {
                     Book(
                         isbn = isbn,
                         title = it.title,
                         published = it.publishDate
                     )
                 }
-                .subscribe {
-                    db.save(it)
-                }
+            db.save(book)
         }
     }
 }
