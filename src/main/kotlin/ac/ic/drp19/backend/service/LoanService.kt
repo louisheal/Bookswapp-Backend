@@ -3,6 +3,7 @@ package ac.ic.drp19.backend.service
 import ac.ic.drp19.backend.model.Loan
 import ac.ic.drp19.backend.repository.BookRepository
 import ac.ic.drp19.backend.repository.LoanRepository
+import ac.ic.drp19.backend.repository.OwnershipRepository
 import ac.ic.drp19.backend.repository.UsersRepository
 import org.springframework.data.repository.findByIdOrNull
 import org.springframework.stereotype.Service
@@ -11,7 +12,8 @@ import org.springframework.stereotype.Service
 class LoanService(
     val loanRepository: LoanRepository,
     val usersRepository: UsersRepository,
-    val bookRepository: BookRepository
+    val bookRepository: BookRepository,
+    val ownershipRepository: OwnershipRepository
 ) {
 
     fun findLoans(fromUserId: Long?, toUserId: Long?): Iterable<Loan> {
@@ -36,20 +38,20 @@ class LoanService(
         bookId: Long,
         copies: Int
     ) {
-        val fromUser = usersRepository.findById(fromUserId)
-        val toUser = usersRepository.findById(toUserId)
-        val book = bookRepository.findById(bookId)
-        fromUser.ifPresent { from ->
+        val ownership = ownershipRepository.findOwnership(fromUserId, bookId)
+        if (ownership != null) {
+            val toUser = usersRepository.findById(toUserId)
             toUser.ifPresent { to ->
-                book.ifPresent { book ->
-                    val loan = Loan(
-                        fromUser = from,
-                        toUser = to,
-                        book = book,
-                        copies = copies
-                    )
-                    loanRepository.save(loan)
-                }
+                val loan = Loan(
+                    fromUser = ownership.owner,
+                    toUser = to,
+                    book = ownership.book,
+                    copies = copies
+                )
+                loanRepository.save(loan)
+
+                ownership.currentCopies -= copies
+                ownershipRepository.save(ownership)
             }
         }
     }
