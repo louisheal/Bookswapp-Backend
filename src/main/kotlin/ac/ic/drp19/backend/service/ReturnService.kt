@@ -4,6 +4,7 @@ import ac.ic.drp19.backend.model.Return
 import ac.ic.drp19.backend.repository.LoanRepository
 import ac.ic.drp19.backend.repository.OwnershipRepository
 import ac.ic.drp19.backend.repository.ReturnRepository
+import org.springframework.data.repository.findByIdOrNull
 import org.springframework.stereotype.Service
 
 @Service
@@ -16,19 +17,26 @@ class ReturnService(
     fun findReturnsOfLoan(loanId: Long) = returnRepository.findReturnsOfLoan(loanId)
 
     fun postReturn(loanId: Long, copies: Int) {
-        loanRepository.findById(loanId).ifPresent { loan ->
+        val loan = loanRepository.findByIdOrNull(loanId) ?: return
+        val ownership = ownershipRepository.findOwnership(
+            loan.fromUser.id,
+            loan.book.id
+        )
+        assert(ownership != null)
+        ownership!!
+        ownership.currentCopies += copies
+        ownershipRepository.save(ownership)
+
+        val totalCopiesReturned = returnRepository.numCopiesReturned(loanId).orElse(0) + copies
+        if (totalCopiesReturned >= loan.copies) {
+            returnRepository.deleteReturnsOfLoan(loanId)
+            loanRepository.deleteById(loanId)
+        } else {
             val ret = Return(
                 loan = loan,
                 copies = copies
             )
-            val ownership = ownershipRepository.findOwnership(
-                loan.fromUser.id,
-                loan.book.id
-            )
-            assert(ownership != null)
-            ownership!!.currentCopies += copies
             returnRepository.save(ret)
-            ownershipRepository.save(ownership!!)
         }
     }
 }
