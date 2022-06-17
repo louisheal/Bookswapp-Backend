@@ -50,15 +50,15 @@ class UsersResource(
     ) {
         ownerService.postOwnership(
             userId,
-            owns.book_id,
-            owns.total_copies,
-            owns.current_copies
+            owns.bookId,
+            owns.totalCopies,
+            owns.currentCopies
         )
     }
 }
 
 class OwnershipPost(
-    val book_id: Long,
-    val total_copies: Int,
-    val current_copies: Int
+    val bookId: Long,
+    val totalCopies: Int,
+    val currentCopies: Int
 )

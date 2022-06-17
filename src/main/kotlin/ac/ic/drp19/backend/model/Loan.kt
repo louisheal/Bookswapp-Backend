@@ -34,11 +34,8 @@ class Loan(
     @Min(1)
     var copies: Int,
 
-    @NotNull
     @JsonFormat(pattern = "yyyy-MM-dd")
     var date: Date = Date.valueOf(LocalDate.now()),
-
-    var returnDate: Date,
 
     @OneToMany(mappedBy = "loan")
     @JsonBackReference
