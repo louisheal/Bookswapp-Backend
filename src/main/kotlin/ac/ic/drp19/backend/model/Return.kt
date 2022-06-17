@@ -25,7 +25,6 @@ class Return(
     @Min(1)
     val copies: Int,
 
-    @NotNull
     @JsonFormat(pattern = "yyyy-MM-dd")
     var date: Date = Date.valueOf(LocalDate.now())
 )

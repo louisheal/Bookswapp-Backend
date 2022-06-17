@@ -1,7 +1,6 @@
 package ac.ic.drp19.backend.service
 
 import ac.ic.drp19.backend.model.Loan
-import ac.ic.drp19.backend.repository.BookRepository
 import ac.ic.drp19.backend.repository.LoanRepository
 import ac.ic.drp19.backend.repository.OwnershipRepository
 import ac.ic.drp19.backend.repository.UsersRepository
@@ -12,7 +11,6 @@ import org.springframework.stereotype.Service
 class LoanService(
     val loanRepository: LoanRepository,
     val usersRepository: UsersRepository,
-    val bookRepository: BookRepository,
     val ownershipRepository: OwnershipRepository
 ) {
 

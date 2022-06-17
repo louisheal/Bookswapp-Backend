@@ -39,11 +39,26 @@ class LoansResource(
             loan.copies
         )
     }
+
+    @PostMapping("/loans/{loan_id}/returns")
+    fun postReturn(
+        @PathVariable("loan_id") loanId: Long,
+        @RequestBody ret: ReturnPost
+    ) {
+        returnService.postReturn(
+            loanId,
+            ret.copies
+        )
+    }
 }
 
 data class LoanPost(
     val fromUserId: Long,
     val toUserId: Long,
     val bookId: Long,
+    val copies: Int
+)
+
+data class ReturnPost(
     val copies: Int
 )
