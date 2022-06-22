@@ -15,7 +15,7 @@ class BookService(
     val olService: OpenLibraryService
 ) {
 
-    fun findBooks(): List<Book> = db.findBooks()
+    fun findBooks(userId: Long): List<Book> = db.findBooks(userId)
 
     fun findBookById(id: Long): Book? = db.findByIdOrNull(id)
 
