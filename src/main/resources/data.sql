@@ -14,4 +14,22 @@ insert into Ownership (owner_id, book_id, totalCopies, currentCopies)
 values ((select id from Users where username='ef420_icl'),
         (select id from Book where isbn='978-1529034523'),
         1, 1
-       )
+       );
+insert into Ownership (owner_id, book_id, totalCopies, currentCopies)
+values ((select id from Users where username='LJRex'),
+    (select id from Book where isbn='978-1529034523'),
+    1, 1);
+insert into Ownership (owner_id, book_id, totalCopies, currentCopies)
+values ((select id from Users where username='dev'),
+    (select id from Book where isbn='1'),
+    1, 1);
+
+insert into Ownership (owner_id, book_id, totalCopies, currentCopies)
+values ((select id from Users where username='Anand5329'),
+    (select id from Book where isbn='2'),
+    1, 1);
+
+insert into Ownership (owner_id, book_id, totalCopies, currentCopies)
+values ((select id from Users where username='Anjey'),
+    (select id from Book where isbn='3'),
+    1, 1);
