@@ -16,9 +16,9 @@ class BooksResource(
     val ownershipService: OwnershipService
 ) {
 
-    @GetMapping("/books/all_but_user/{id}")
+    @GetMapping("/books")
     fun books(
-        @PathVariable(name = "id") userId: Long
+        @RequestParam(name = "except_uid") userId: Long
     ): List<Book> = bookService.findBooks(userId)
 
     @GetMapping("/books/{id}")
