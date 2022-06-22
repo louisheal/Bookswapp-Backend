@@ -9,11 +9,24 @@ import org.springframework.data.repository.query.Param
 
 interface OwnershipRepository : CrudRepository<Ownership, Long> {
 
-    @Query("select o.owner as u from Ownership o where o.book.id = :book_id")
+    @Query("select o.owner from Ownership o where o.book.id = :book_id")
     fun findOwnersOfBook(@Param("book_id") bookId: Long): List<User>
+
+    @Query(
+        """select o.owner from Ownership o 
+            where o.book.id = :book_id 
+            and o.owner.id <> :except_id"""
+    )
+    fun findOwnersOfBookExceptFor(
+        @Param("book_id") bookId: Long,
+        @Param("except_id") exceptUser: Long
+    ): List<User>
 
     @Query("select o.book from Ownership o where o.owner.id = :user_id")
     fun findUserBooks(@Param("user_id") userId: Long): List<Book>
+
+    @Query("select distinct(o.book) from Ownership o where o.owner.id <> :user_id")
+    fun findBooksNotOwnedBy(@Param("user_id") userId: Long): List<Book>
 
     @Query("select o from Ownership o where o.owner.id = :user_id and o.book.id = :book_id")
     fun findOwnership(@Param("user_id") userId: Long, @Param("book_id") bookId: Long): Ownership?
