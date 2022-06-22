@@ -18,9 +18,10 @@ class ReturnService(
 
     fun postReturn(loanId: Long, copies: Int) {
         val loan = loanRepository.findByIdOrNull(loanId) ?: return
+        val request = loan.request
         val ownership = ownershipRepository.findOwnership(
-            loan.fromUser.id,
-            loan.book.id
+            request.fromUser.id,
+            request.book.id
         )
         assert(ownership != null)
         ownership!!
@@ -28,7 +29,7 @@ class ReturnService(
         ownershipRepository.save(ownership)
 
         val totalCopiesReturned = returnRepository.numCopiesReturned(loanId).orElse(0) + copies
-        if (totalCopiesReturned >= loan.copies) {
+        if (totalCopiesReturned >= request.copies) {
             returnRepository.deleteReturnsOfLoan(loanId)
             loanRepository.deleteById(loanId)
         } else {
