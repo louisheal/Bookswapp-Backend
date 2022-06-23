@@ -7,7 +7,12 @@ import ac.ic.drp19.backend.service.OwnershipService
 import ac.ic.drp19.backend.util.removeQuotes
 import org.springframework.http.HttpStatus
 import org.springframework.http.ResponseEntity
-import org.springframework.web.bind.annotation.*
+import org.springframework.web.bind.annotation.GetMapping
+import org.springframework.web.bind.annotation.PathVariable
+import org.springframework.web.bind.annotation.PostMapping
+import org.springframework.web.bind.annotation.RequestBody
+import org.springframework.web.bind.annotation.RequestParam
+import org.springframework.web.bind.annotation.RestController
 import org.springframework.web.server.ResponseStatusException
 
 @RestController
@@ -18,8 +23,13 @@ class BooksResource(
 
     @GetMapping("/books")
     fun books(
-        @RequestParam(name = "except_uid") userId: Long
-    ): List<Book> = bookService.findBooks(userId)
+        @RequestParam(name = "exceptUser") userId: Long?
+    ): Iterable<Book> =
+        if (userId != null) {
+            ownershipService.findBooksNotOwnedBy(userId)
+        } else {
+            bookService.findBooks()
+        }
 
     @GetMapping("/books/{id}")
     fun bookId(
@@ -29,9 +39,10 @@ class BooksResource(
 
     @GetMapping("/books/{id}/owners")
     fun bookOwners(
-        @PathVariable(name = "id") bookId: Long
+        @PathVariable(name = "id") bookId: Long,
+        @RequestParam(name = "exceptUser") userId: Long?
     ): List<User> =
-        ownershipService.findOwnersOfBook(bookId)
+        ownershipService.findOwnersOfBook(bookId, userId)
 
     @PostMapping("/books")
     fun postBook(@RequestBody isbn: String): ResponseEntity<Any?> {

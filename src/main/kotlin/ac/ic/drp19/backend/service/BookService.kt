@@ -3,11 +3,8 @@ package ac.ic.drp19.backend.service
 import ac.ic.drp19.backend.model.Book
 import ac.ic.drp19.backend.repository.BookRepository
 import org.springframework.data.repository.findByIdOrNull
-import org.springframework.http.HttpStatus
 import org.springframework.stereotype.Service
 import org.springframework.web.server.ResponseStatusException
-import reactor.core.publisher.Mono
-import kotlin.jvm.Throws
 
 @Service
 class BookService(
@@ -15,7 +12,7 @@ class BookService(
     val olService: OpenLibraryService
 ) {
 
-    fun findBooks(userId: Long): List<Book> = db.findBooks(userId)
+    fun findBooks(): Iterable<Book> = db.findAll()
 
     fun findBookById(id: Long): Book? = db.findByIdOrNull(id)
 
