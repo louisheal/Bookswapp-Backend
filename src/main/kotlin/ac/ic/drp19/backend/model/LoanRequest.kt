@@ -9,34 +9,36 @@ import javax.persistence.Entity
 import javax.persistence.GeneratedValue
 import javax.persistence.GenerationType
 import javax.persistence.Id
-import javax.persistence.OneToMany
-import javax.persistence.Table
+import javax.persistence.ManyToOne
+import javax.persistence.OneToOne
+import javax.validation.constraints.Min
 import javax.validation.constraints.NotNull
+import javax.validation.constraints.Null
 
 @Entity
 @ExposeId
-@Table(name = "Users")
-class User(
+class LoanRequest(
     @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
     var id: Long = 0,
 
-    @NotNull
-    var username: String,
+    @ManyToOne
+    var fromUser: User,
+
+    @ManyToOne
+    var toUser: User,
+
+    @ManyToOne
+    var book: Book,
 
     @NotNull
-    var passwdHash: String,
+    @Min(1)
+    var copies: Int,
 
-    @NotNull
-    var name: String,
-
-    var email: String,
-
-    var phone: String,
+    @OneToOne(mappedBy = "request")
+    @Null
+    @JsonBackReference
+    var loan: Loan? = null,
 
     @JsonFormat(pattern = "yyyy-MM-dd")
-    var joinDate: Date = Date.valueOf(LocalDate.now()),
-
-    @OneToMany(mappedBy = "owner")
-    @JsonBackReference(value = "user-owns")
-    var owns: List<Ownership> = emptyList()
+    var date: Date = Date.valueOf(LocalDate.now()),
 )

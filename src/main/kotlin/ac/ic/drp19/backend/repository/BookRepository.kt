@@ -10,7 +10,7 @@ interface BookRepository : CrudRepository<Book, Long> {
     @Query("select b " +
             "from Book b " +
             "where " +
-            "b not in (select l.book from Loan l) " +
+            "b not in (select l.request.book from Loan l) " +
             "AND " +
             "b not in (select o.book from Ownership o where o.owner.id = :user_id)")
     fun findBooks(@Param("user_id") userId: Long): List<Book>
