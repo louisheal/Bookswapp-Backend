@@ -15,11 +15,12 @@ class OwnershipService(
     val bookDb: BookRepository
 ) {
 
-    fun findBooksNotOwnedBy(userId: Long): List<Book> = ownerDb.findBooksNotOwnedBy(userId)
+    fun findBooksWithOwnersExcept(userId: Long): List<Book> =
+        ownerDb.findBooksWithOwnersExcept(userId)
 
     fun findOwnersOfBook(bookId: Long, exceptUser: Long?): List<User> =
         if (exceptUser != null) {
-            ownerDb.findOwnersOfBookExceptFor(bookId, exceptUser)
+            ownerDb.findOwnersOfBookExcept(bookId, exceptUser)
         } else {
             ownerDb.findOwnersOfBook(bookId)
         }

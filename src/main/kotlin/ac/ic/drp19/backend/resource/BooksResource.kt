@@ -26,7 +26,7 @@ class BooksResource(
         @RequestParam(name = "exceptUser") userId: Long?
     ): Iterable<Book> =
         if (userId != null) {
-            ownershipService.findBooksNotOwnedBy(userId)
+            ownershipService.findBooksWithOwnersExcept(userId)
         } else {
             bookService.findBooks()
         }
