@@ -24,10 +24,13 @@ class User(
     var username: String,
 
     @NotNull
-    var passwdHash: String,
+    var name: String,
 
     @NotNull
-    var name: String,
+    var institution: String,
+
+    @NotNull
+    var department: String,
 
     var email: String,
 
