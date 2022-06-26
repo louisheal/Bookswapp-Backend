@@ -44,6 +44,13 @@ class BooksResource(
     ): List<User> =
         ownershipService.findOwnersOfBook(bookId, userId)
 
+    @GetMapping("/books/{id}/owners/count")
+    fun bookOwnersCount(
+        @PathVariable(name = "id") bookId: Long,
+        @RequestParam(name = "exceptUser") userId: Long?
+    ): Int =
+        ownershipService.countOwnersOfBook(bookId, userId)
+
     @PostMapping("/books")
     fun postBook(@RequestBody isbn: String): ResponseEntity<Any?> {
         return try {

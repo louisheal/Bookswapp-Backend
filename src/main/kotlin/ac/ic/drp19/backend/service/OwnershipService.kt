@@ -25,6 +25,13 @@ class OwnershipService(
             ownerDb.findOwnersOfBook(bookId)
         }
 
+    fun countOwnersOfBook(bookId: Long, exceptUser: Long?): Int =
+        if (exceptUser != null) {
+            ownerDb.countOwnersOfBookExcept(bookId, exceptUser)
+        } else {
+            ownerDb.countOwnersOfBook(bookId)
+        }
+
     fun findUserBooks(userId: Long): List<Book> = ownerDb.findUserBooks(userId)
 
     fun findOwnership(userId: Long, bookId: Long): Ownership? =
