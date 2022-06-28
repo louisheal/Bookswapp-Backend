@@ -4,6 +4,7 @@ import ac.ic.drp19.backend.util.ExposeId
 import org.reflections.Reflections
 import org.springframework.boot.autoconfigure.SpringBootApplication
 import org.springframework.boot.runApplication
+import org.springframework.context.annotation.PropertySource
 import org.springframework.data.rest.core.config.RepositoryRestConfiguration
 import org.springframework.data.rest.webmvc.config.RepositoryRestConfigurer
 import org.springframework.web.bind.annotation.GetMapping
@@ -11,6 +12,7 @@ import org.springframework.web.bind.annotation.RestController
 import org.springframework.web.servlet.config.annotation.CorsRegistry
 
 @SpringBootApplication
+@PropertySource("classpath:application-\${spring.profiles.active:default}.properties")
 class BookappBackendApplication : RepositoryRestConfigurer {
 
     override fun configureRepositoryRestConfiguration(
