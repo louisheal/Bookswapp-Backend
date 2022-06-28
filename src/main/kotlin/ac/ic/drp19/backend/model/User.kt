@@ -12,6 +12,7 @@ import javax.persistence.Id
 import javax.persistence.OneToMany
 import javax.persistence.Table
 import javax.validation.constraints.NotNull
+import javax.validation.constraints.Null
 
 @Entity
 @ExposeId
@@ -24,6 +25,9 @@ class User(
     var username: String,
 
     @NotNull
+    var password: String,
+
+    @NotNull
     var name: String,
 
     @NotNull
@@ -32,9 +36,11 @@ class User(
     @NotNull
     var department: String,
 
-    var email: String,
+    @Null
+    var email: String?,
 
-    var phone: String,
+    @Null
+    var phone: String?,
 
     @JsonFormat(pattern = "yyyy-MM-dd")
     var joinDate: Date = Date.valueOf(LocalDate.now()),

@@ -13,12 +13,19 @@ import org.springframework.web.bind.annotation.RestController
 
 @RestController
 class UsersResource(
-    val userService: UsersService,
-    val ownerService: OwnershipService
+    private val userService: UsersService,
+    private val ownerService: OwnershipService
 ) {
 
+    @PostMapping("/signup")
+    fun signUp(@RequestBody userDto: UserDto) {
+        userDto.apply {
+            userService.signUp(username, password, name, institution, department, email, phone)
+        }
+    }
+
     @GetMapping("/users")
-    fun users(): List<User> = userService.findUsers()
+    fun users(): Iterable<User> = userService.findUsers()
 
     @GetMapping("/users/{user_id}")
     fun user(
@@ -38,26 +45,28 @@ class UsersResource(
     ): List<Book>? =
         ownerService.findUserBooks(userId)
 
-    @PostMapping("/users")
-    fun postUser(@RequestBody user: User) {
-        userService.postUser(user)
-    }
-
     @PostMapping("/users/{user_id}/owns")
     fun postOwnership(
         @PathVariable("user_id") userId: Long,
-        @RequestBody owns: OwnershipPost
+        @RequestBody owns: OwnershipDto
     ) {
-        ownerService.postOwnership(
-            userId,
-            owns.bookId,
-            owns.totalCopies,
-            owns.currentCopies
-        )
+        owns.apply {
+            ownerService.postOwnership(userId, bookId, totalCopies, currentCopies)
+        }
     }
 }
 
-class OwnershipPost(
+data class UserDto(
+    val username: String,
+    val password: String,
+    val name: String,
+    val institution: String,
+    val department: String,
+    val email: String? = null,
+    val phone: String? = null
+)
+
+data class OwnershipDto(
     val bookId: Long,
     val totalCopies: Int,
     val currentCopies: Int
