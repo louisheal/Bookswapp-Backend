@@ -4,6 +4,7 @@ import ac.ic.drp19.backend.model.Ownership
 import ac.ic.drp19.backend.model.User
 import ac.ic.drp19.backend.repository.UsersRepository
 import org.springframework.data.repository.findByIdOrNull
+import org.springframework.security.core.context.SecurityContextHolder
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder
 import org.springframework.stereotype.Service
 
@@ -38,5 +39,10 @@ class UsersService(
             phone = phone
         )
         db.save(user)
+    }
+
+    fun getLoggedInUser(): User {
+        val auth = SecurityContextHolder.getContext().authentication
+        return db.findByUsername(auth.name)!!
     }
 }

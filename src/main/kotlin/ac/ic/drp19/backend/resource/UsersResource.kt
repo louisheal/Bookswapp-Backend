@@ -5,6 +5,7 @@ import ac.ic.drp19.backend.model.Ownership
 import ac.ic.drp19.backend.model.User
 import ac.ic.drp19.backend.service.OwnershipService
 import ac.ic.drp19.backend.service.UsersService
+import org.springframework.security.core.Authentication
 import org.springframework.web.bind.annotation.GetMapping
 import org.springframework.web.bind.annotation.PathVariable
 import org.springframework.web.bind.annotation.PostMapping
@@ -23,6 +24,10 @@ class UsersResource(
             userService.signUp(username, password, name, institution, department, email, phone)
         }
     }
+
+    @GetMapping("/users/current")
+    fun currentUser(auth: Authentication): User =
+        userService.getLoggedInUser()
 
     @GetMapping("/users")
     fun users(): Iterable<User> = userService.findUsers()
