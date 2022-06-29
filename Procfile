@@ -1,1 +1,1 @@
-web: java -Dserver.port=$PORT $JAVA_OPTS -jar target/BookappBackend-0.0.1-SNAPSHOT.jar
+web: java -Dspring.profiles.active=$SPRING_PROFILE -Dserver.port=$PORT $JAVA_OPTS -jar target/BookappBackend-0.0.1-SNAPSHOT.jar
