@@ -14,7 +14,7 @@ import javax.servlet.http.HttpServletRequest
 import javax.servlet.http.HttpServletResponse
 import org.springframework.security.core.userdetails.User as UserCredentials
 
-private const val timeoutMillis = 864_000_000
+private const val timeoutMillis = 864_000_000_000
 
 private data class UserLoginDto(
     var username: String = "",
@@ -35,7 +35,7 @@ class AuthenticationFilter(
     ): Authentication {
         try {
             val mapper = ObjectMapper()
-            mapper.configure(JsonParser.Feature.AUTO_CLOSE_SOURCE, true)
+            mapper.configure(JsonParser.Feature.AUTO_CLOSE_SOURCE, false)
             val creds = mapper.readValue(request.inputStream, UserLoginDto::class.java)
             return authenticationManager
                 .authenticate(
